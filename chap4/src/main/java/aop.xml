@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context.xsd
+             http://www.springframework.org/schema/aop
+             http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<bean id="write" class="spring.WriteImpl">
+		<constructor-arg><ref bean="articleDao"/></constructor-arg>
+	</bean>
+	<bean id="articleDao" class="spring.MariadbArticleDao" />
+	<!-- AOP설정 -->
+	<!-- Aspectj 클래스를 객체화 -->
+	<bean id="logging" class="spring.LogginAspect" />
+	<!--
+		aop 관련 용어
+		
+			pointcut : aop 대상이 되는 메서드 설정. 핵심로직 지정
+			execution(public * spring.*Impl.*(..))
+				- public : 메서드의 접근제어자 지정
+				-   *	   : 리턴타입 상관없음
+				- spring.*Impl : spring 패키지 내부의 클래스 중 이름이 Impl로 끝나는 클래스
+				- *(..)	: 메서드이름 상관없음. 매개변수 상관없음.
+			aspect : AOP로 사용될 객체 설정
+				- ref="logging" => 객체의 이름
+			advice : AOP가 실행될 시점 지정
+				- around : 이전과 이후
+				- before : 이전
+				- after  : 이후
+				- afterReturning : 정상 종료 이후
+				- afterThrowing : 예외 종류 이후
+	 -->
+	
+	
+	<aop:config> <!-- aop 설정 -->
+		<!-- pointcut : 핵심로직을 설정 : spring 패키지에 속한 클래스 중
+						클래스 이름이 *Impl로 끝나는 클래스의 public 메서드. : 리턴타입, 매개변수 상관 X
+						= 핵심로직이 실행될때 접근제어자가 public 리턴값 상관 없음 spring.~Impl.(메서드이름 상관X, 매개변수갯수 상관X) -->
+		<aop:pointcut expression="execution(public * spring.*Impl.*(..))" id="servicepointcut"/>
+		<!-- aop 클래스 지정 -->
+		<!-- AOP로 사용될 객체와 pointcut을 지정. -->
+		<aop:aspect id="loggingAspect" ref="logging">
+			<!-- 핵심로직 시작 전후에 logging 메서드를 실행 -->
+			<!-- advice 지정
+				aop:around :핵심로직의 시작과 끝에 실행됨
+			 -->
+			<aop:around method="logging" pointcut-ref="servicepointcut"/>
+		</aop:aspect>
+	</aop:config>
+</beans>

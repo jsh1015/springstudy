@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- /src/main/java/applicationContext.xml -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="greeter" class="chap1.Greeter">
+	<property name="format" value="%s을 시작합니다." />
+	<!-- setproperty를 의미 format이라는 멤버에 value를 넣음 set이므로 setformat메서드가 있어야함-->
+</bean>
+<bean id="message" class="chap1.MessageKo"/>
+<bean id="message2" class="chap1.MessageEn"/>
+</beans>
