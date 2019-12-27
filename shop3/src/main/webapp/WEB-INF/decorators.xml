@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<decorators defaultdir="/decorator">
+	<!-- decorator폴더의 decorator.jsp로 가면 -->
+	<decorator name="main" page="decorator.jsp">
+		<pattern>*.shop</pattern>
+	</decorator>
+	<excludes><!-- sitemesh를 사용하지 않게 -->
+	
+	</excludes>
+</decorators>
