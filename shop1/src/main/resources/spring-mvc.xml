@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context.xsd
+             http://www.springframework.org/schema/aop
+             http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- spring-webmvc -->
+	<!-- * handlerMapping : url과 (action)Controller를 연결해주는 설정 -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<value>/index.shop=indexController
+				   /detail.shop=detailController</value>
+		</property>
+	</bean>
+	<bean id="indexController" class="controller.IndexController" p:shopService-ref="shopService" />
+	<bean id="detailController" class="controller.DetailController" p:shopService-ref="shopService" />
+	<bean id="shopService" class="logic.ShopService" p:itemDao-ref="itemDao" /><!-- (2) -->
+	<bean id="itemDao" class="dao.ItemDao" p:dataSource-ref="dataSource" /><!-- (1) -->
+								<!-- p:dataSource-ref : setdataSource-->
+	<!-- 뷰결정자
+		index라는 값이 들어와있음.
+		prefix 를 앞에 붙이고 suffix를 뒤에 붙여라 
+		webapp가 root로 되어있음-->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix"><value>/WEB-INF/view/</value></property>
+		<property name="suffix"><value>.jsp</value></property>
+	</bean>
+</beans>
