@@ -1,8 +1,8 @@
-/* @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css); */
-@import url('https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap&subset=korean');
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*@import url('https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap&subset=korean');*/
 
-/* a,h1,h2,h3,h4,h5,h6,table,tr,td{font-family: 'Jeju Gothic', serif;} */
-a,textarea,h1,h2,h3,h4,h5,h6,table,tr,td,input[type="text"],input[type="file"],input[type="button"],input[type="submit"]{font-family: 'Gamja Flower', cursive; font-size: large;}
+a,h1,h2,h3,h4,h5,h6,table,tr,td{font-family: 'Jeju Gothic', serif;}
+/* a,textarea,h1,h2,h3,h4,h5,h6,table,tr,td,input[type="text"],input[type="file"],input[type="button"],input[type="submit"]{font-family: 'Gamja Flower', cursive; font-size: large;}*/
 table{
 	width:100%;
 	border-collapse: collapse;

@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -27,8 +28,8 @@ public class UserDao {
 	
 	public void insert(User user) {
 		SqlParameterSource proparam = new BeanPropertySqlParameterSource(user);
-		String sql = "insert into useraccount (userid, password, username, postcode, email, birthday) "
-				+ " values (:userid, :password, :username, :postcode, :email, :birthday)";
+		String sql = "insert into useraccount (userid, password, phoneno, username, postcode, email, birthday) "
+				+ " values (:userid, :password, :phoneno, :username, :postcode, :email, :birthday)";
 		template.update(sql, proparam);
 	}
 
@@ -51,5 +52,19 @@ public class UserDao {
 		param.clear();
 		param.put("userid",userid);
 		template.update("delete from useraccount where userid=:userid", param);
+	}
+
+	public List<User> userlist() {
+		String sql = "select * from useraccount";
+		return template.query(sql, mapper);
+	}
+
+	public List<User> list(String[] idchks) {
+		String sql = "select * from useraccount where userid in (";
+		for(int i=0;i<idchks.length;i++) {
+			sql+="'"+idchks[i]+ ((i==idchks.length-1)?"'":"',");
+		}
+		sql += ")";
+		return template.query(sql,mapper);
 	}
 }

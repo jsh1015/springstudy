@@ -161,8 +161,9 @@ public class UserController {
 				mav.setViewName("redirect:/admin/list.shop");
 			}else {
 				session.invalidate();
-				mav.setViewName("redirect:/user/login.shop");
-				/////////////////////////////////////////////////////
+				mav.addObject("msg",user.getUserid()+"회원님. 탈퇴 되었습니다.");
+				mav.addObject("url","login.shop");
+				mav.setViewName("alert");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

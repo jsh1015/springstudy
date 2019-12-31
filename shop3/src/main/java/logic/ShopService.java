@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import dao.BoardDao;
 import dao.ItemDao;
 import dao.SaleDao;
 import dao.SaleItemDao;
@@ -25,6 +26,8 @@ public class ShopService {
 	private SaleDao saleDao;
 	@Autowired
 	private SaleItemDao saleItemDao;
+	@Autowired
+	private BoardDao boardDao;
 
 	public List<Item> getItemList() {
 		return itemDao.list();
@@ -115,4 +118,69 @@ public class ShopService {
 	public void userDelete(String userid) {
 		userDao.delete(userid);
 	}
+
+	public int boardcount(String type,String content) {
+		return boardDao.count(type,content);
+	}
+
+	public List<Board> boardlist(Integer pageNum, int limit, String type,String content) {
+		return boardDao.list(pageNum,limit,type,content);
+	}
+
+	
+	public void boardWrite(Board board, HttpServletRequest request) {
+		//첨부파일이 존재하는 경우
+		if(board.getFile1()!=null && !board.getFile1().isEmpty()) {
+			uploadFileCreate(board.getFile1(), request, "board/file/");
+			//업로드될 파일 이름을 설정
+			board.setFileurl(board.getFile1().getOriginalFilename());
+		}
+		//현재 등록된 게시물 번호의 최대값
+		int max = boardDao.maxnum();
+		board.setNum(++max);
+		board.setGrp(max);
+		boardDao.insert(board);
+	}
+
+	public Board getBoard(Integer num, HttpServletRequest request) {
+		if(request.getRequestURI().contains("detail.shop")) {
+			boardDao.readcntadd(num);
+		}
+		return boardDao.selectOne(num);
+	}
+	
+	public Board getBoard(Integer num) {
+		return boardDao.selectOne(num);
+	}
+
+	public void boardreply(Board board) {
+		boardDao.grpstepadd(board); //grp 같은애들의 grpstep +1
+		
+		int max = boardDao.maxnum();
+		board.setNum(++max);
+		board.setGrplevel(board.getGrplevel()+1);
+		board.setGrpstep(board.getGrpstep()+1);
+		boardDao.insert(board);
+	}
+
+	public void boardUpdate(Board board , HttpServletRequest request) {
+		if(board.getFile1()!=null && !board.getFile1().isEmpty()) {
+			uploadFileCreate(board.getFile1(), request, "board/file/");
+			board.setFileurl(board.getFile1().getOriginalFilename());
+		}
+		boardDao.update(board);
+	}
+
+	public void boardDelete(int num) {
+		boardDao.delete(num);
+	}
+
+	public List<User> userList() {
+		return userDao.userlist();
+	}
+
+	public List<User> userList(String[] idchks) {
+		return userDao.list(idchks);
+	}
+	
 }

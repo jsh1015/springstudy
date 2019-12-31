@@ -5,6 +5,6 @@
 		<pattern>*.shop</pattern>
 	</decorator>
 	<excludes><!-- sitemesh를 사용하지 않게 -->
-	
+		<pattern>/board/imgupload*</pattern>
 	</excludes>
 </decorators>
