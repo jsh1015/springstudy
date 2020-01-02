@@ -1,0 +1,40 @@
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*@import url('https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap&subset=korean');*/
+
+a,h1,h2,h3,h4,h5,h6,table,tr,td{font-family: 'Jeju Gothic', serif;}
+/* a,textarea,h1,h2,h3,h4,h5,h6,table,tr,td,input[type="text"],input[type="file"],input[type="button"],input[type="submit"]{font-family: 'Gamja Flower', cursive; font-size: large;}*/
+table{
+	width:100%;
+	border-collapse: collapse;
+}
+th, td{
+	border :3px solid #bcbcbc;
+	text-align:center;
+	padding:8px;
+}
+a{text-decoration:none;}
+th{background-color:#D5D5D5; color:black;}
+td{background-color:#FEFEFE; color:black}
+caption{
+	color:#111111; font-size:20px;
+	background-color:#FFFFFF;
+}
+input[type="text"],textarea{
+	width:100%;
+	color:black;
+}
+input[type="password"]{
+	width:100%;
+	font: serif;
+}
+.leftcol{
+	text-align:left;
+	vertical-align: top;
+}
+.lefttoptable{
+	height: 250px;
+	border-width: 0px;
+	text-align: left;
+	vertical-align: top;
+	padding: 0px;
+}
