@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<sitemesh>
+	<property name="decorators-file" value="/WEB-INF/decorators.xml" />
+	<excludes file="${decorators-file}"/>
+	<!-- excludes 모든걸 sitemesh로 묶을 수 없으니 decorator-file을 사용해라 -->
+	<page-parsers>
+	<!-- html을 재조립 -->
+	<!-- 기본적인 환경설정 -->
+		<parser content-type="text/html" class="com.opensymphony.module.sitemesh.parser.HTMLPageParser" />
+	</page-parsers>
+	<decorator-mappers>
+	<!-- ~.url이들어오면 decorator file을 사용할 수 있음 환경설정은 decorators-file에 있다. -->
+		<mapper class="com.opensymphony.module.sitemesh.mapper.ConfigDecoratorMapper">
+			<param name="config" value="${decorators-file}"/>
+		</mapper>
+	</decorator-mappers>
+</sitemesh>
